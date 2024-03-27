@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, TextInput, Alert } from 'react-native';
+import { useFonts } from 'expo-font';
 
 // Lista de palavras possíveis
 const words = [
@@ -9,6 +10,20 @@ const words = [
 ];
 
 export default function App() {
+
+  let [fontsLoaded] = useFonts({
+    'Mariana': require('./assets/fonts/Satoshi-Black.otf'),
+    'Mariana': require('./assets/fonts/Satoshi-Regular.otf'),
+    'Mariana': require('./assets/fonts/Satoshi-Light.otf'),
+    'Mariana': require('./assets/fonts/Satoshi-Black.otf'),
+    'Mariana': require('./assets/fonts/Satoshi-Black.otf'),
+    'Mariana': require('./assets/fonts/Satoshi-Black.otf'),
+  });
+  
+  if (!fontsLoaded) {
+    return null;
+  }
+
   const [secretWord, setSecretWord] = useState('');
   const [guess, setGuess] = useState('');
   const [round, setRound] = useState(1);
@@ -117,13 +132,13 @@ export default function App() {
           }
           feedbackSquares.push(
             <View key={j} style={{ backgroundColor, width: 30, height: 30, margin: 3, justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{guessLetters[j] ? guessLetters[j].toUpperCase() : ''}</Text>
+              <Text style={{ fontSize: 16,  fontFamily: 'Mariana', fontWeight: 'bold' }}>{guessLetters[j] ? guessLetters[j].toUpperCase() : ''}</Text>
             </View>
           );
         }
       }
       allFeedbackSquares.push(
-        <View key={i} style={{ flexDirection: 'row', marginTop: 10 }}>
+        <View key={i} style={{ flexDirection: 'row', marginTop: 10 }}>     fontFamily: 'Mariana',
           {feedbackSquares}
         </View>
       );
@@ -132,7 +147,7 @@ export default function App() {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'center', fontFamily: 'Mariana', alignItems: 'center' }}>
       {!gameOver && (
         <>
           <Text>Round: {round}</Text>
@@ -141,7 +156,7 @@ export default function App() {
             {renderFeedbackSquares()}
           </View>
           <TextInput
-            style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginTop: 10, marginBottom: 10, paddingHorizontal: 10 }}
+            style={{ height: 40, borderColor: 'gray', fontFamily: 'Mariana', borderWidth: 1, marginTop: 10, marginBottom: 10, paddingHorizontal: 10 }}
             onChangeText={validateInput}
             value={guess}
             editable={attemptsLeft > 0}
